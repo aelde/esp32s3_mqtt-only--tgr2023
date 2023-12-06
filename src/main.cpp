@@ -4,12 +4,18 @@
 // constants
 #define TAG             "main"
 #define BTN_PIN         0
-#define WIFI_SSID       "eazycloud2g"
+#define WIFI_SSID       "DSEL24G"
 #define WIFI_PASSWORD   "piglet1234"
+
 // #define WIFI_SSID       "TGR17_2.4G"
 // #define WIFI_PASSWORD   ""
-#define MQTT_EVT_TOPIC  "tgr2023/sailormoon/btn_evt"
-#define MQTT_CMD_TOPIC  "tgr2023/sailormoon/cmd"
+
+// #define MQTT_EVT_TOPIC  "tgr2023/sailormoon/btn_evt"
+// #define MQTT_CMD_TOPIC  "tgr2023/sailormoon/cmd"
+
+#define MQTT_EVT_TOPIC  "6424020002/smartfarm/control"
+#define MQTT_CMD_TOPIC  "6424020002/smartfarm/status"
+
 #define MQTT_DEV_ID     43
 
 // static function prototypes
@@ -50,9 +56,10 @@ void loop() {
         if(millis()-prev_millis > 1000){
         // publish button event
             prev_millis = millis();
-            evt_buf["ID"] = MQTT_DEV_ID;
+            evt_buf["id"] = "002";
             evt_buf["timestamp"] = millis();
             evt_buf["pressed"] = true;
+            evt_buf["ch1"] = "on";
             serializeJson(evt_buf,buf);
             net_mqtt_publish(MQTT_EVT_TOPIC,buf);
         }
